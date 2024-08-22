@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agent_x/constants/api_constants.dart';
 import 'package:agent_x/domain/repositories/agent_repository_interface.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +18,7 @@ class AgentRepositoryImpl implements AgentRepository {
           try {
             return Agent.fromJson(agentData);
           } catch (e) {
-            print('Error mapping agent: $e');
+            log('Error mapping agent: $e');
             return null;
           }
         }).toList();

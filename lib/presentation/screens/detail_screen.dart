@@ -1,7 +1,6 @@
 import 'package:agent_x/domain/entities/agent.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -21,30 +20,30 @@ class DetailScreen extends StatelessWidget {
         .toList();
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              gradient: agent.backgroundGradientColors.length > 1
-                  ? LinearGradient(
-                      colors: agent.backgroundGradientColors
-                          .map((color) => Color(int.parse(color, radix: 16))
-                              .withOpacity(0.5))
-                          .toList(),
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    )
-                  : LinearGradient(
-                      colors: [
-                        Color(int.parse(agent.backgroundGradientColors[0],
-                            radix: 16)),
-                        Color(int.parse(agent.backgroundGradientColors[0],
-                            radix: 16)),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-            ),
+        body: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            gradient: agent.backgroundGradientColors.length > 1
+                ? LinearGradient(
+                    colors: agent.backgroundGradientColors
+                        .map((color) =>
+                            Color(int.parse(color, radix: 16)).withOpacity(0.5))
+                        .toList(),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  )
+                : LinearGradient(
+                    colors: [
+                      Color(int.parse(agent.backgroundGradientColors[0],
+                          radix: 16)),
+                      Color(int.parse(agent.backgroundGradientColors[0],
+                          radix: 16)),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+          ),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -90,14 +89,16 @@ class DetailScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: agent.roleDisplayIcon,
-                          color: Colors.black54,
-                          height: 12.0,
-                        ),
+                        agent.roleDisplayIcon != null
+                            ? CachedNetworkImage(
+                                imageUrl: agent.roleDisplayIcon!,
+                                color: Colors.black54,
+                                height: 12.0,
+                              )
+                            : const SizedBox.shrink(),
                         const SizedBox(width: 8.0),
                         Text(
-                          agent.role,
+                          agent.role ?? 'Valorant Agent',
                           style: const TextStyle(
                             color: Colors.black45,
                             fontSize: 10.0,
@@ -130,6 +131,7 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(height: 24.0),
                     if (agentPassive != null)
                       Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
@@ -190,6 +192,8 @@ class AgentDetailWidget extends StatelessWidget {
     return ListTile(
       leading: CachedNetworkImage(
         imageUrl: ability.displayIcon,
+        height: 40.0,
+        width: 40.0,
       ),
       title: Text(ability.displayName),
       subtitle: Text(

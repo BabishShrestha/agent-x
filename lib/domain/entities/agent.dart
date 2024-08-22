@@ -1,8 +1,8 @@
 class Agent {
   final String id;
   final String name;
-  final String role;
-  final String roleDisplayIcon;
+  final String? role;
+  final String? roleDisplayIcon;
   final String background;
   final String description;
   final String displayIcon;
@@ -13,8 +13,8 @@ class Agent {
   Agent({
     required this.id,
     required this.name,
-    required this.role,
-    required this.roleDisplayIcon,
+    this.role,
+    this.roleDisplayIcon,
     required this.displayIcon,
     required this.abilities,
     required this.fullPortrait,
@@ -27,8 +27,8 @@ class Agent {
     return Agent(
         id: json['uuid'],
         name: json['displayName'],
-        role: json['role']['displayName'],
-        roleDisplayIcon: json['role']['displayIcon'],
+        role: json['role']?['displayName'],
+        roleDisplayIcon: json['role']?['displayIcon'],
         displayIcon: json['displayIcon'],
         fullPortrait: json['fullPortrait'],
         background: json['background'],

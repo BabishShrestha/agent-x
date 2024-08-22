@@ -164,14 +164,17 @@ class AgentScreen extends StatelessWidget {
                                     children: [
                                       CachedNetworkImage(
                                         imageUrl: state
-                                            .agents[state.selectedIndex]
-                                            .roleDisplayIcon,
+                                                .agents[state.selectedIndex]
+                                                .roleDisplayIcon ??
+                                            '',
                                         color: Colors.black54,
                                         height: 12.0,
                                       ),
                                       const SizedBox(width: 8.0),
                                       Text(
-                                        state.agents[state.selectedIndex].role,
+                                        state.agents[state.selectedIndex]
+                                                .role ??
+                                            'Mystery',
                                         style: const TextStyle(
                                           color: Colors.black45,
                                           fontSize: 14.0,
